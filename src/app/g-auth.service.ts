@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential} from 'firebase/auth';
+import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential, signInWithPopup} from 'firebase/auth';
 
 declare var google: any;
 declare var client: any;
@@ -77,11 +77,13 @@ export class GAuthService {
     google.accounts.id.renderButton( element, { theme: "outline", size: "large" } );
   }
 
-  onAuthStateChangedHandle = (user: any) => {
+  onAuthStateChangedHandle = async (user: any) => {
     if (user) {
-      const credential = GoogleAuthProvider.credentialFromResult(user)
-      const accessToken = credential?.accessToken;
-      console.log('Signed in: ', user, accessToken);
+      (window as any).t = {
+        tokenClient: this.tokenClient,
+        authClient: this.authClient,
+        user,
+      }
       this.user = user;
       //gapi.client.setToken({access_token: user.accessToken})
     } else {
@@ -117,6 +119,25 @@ export class GAuthService {
       (str: any, event: {summary: any; start: {dateTime: any; date: any;};}) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
       'Events:\n');
     (document.getElementById('content') as any).innerText = output;
+  }
+
+  firebaseFlow() {
+    const provider = new GoogleAuthProvider();
+    provider.addScope(SCOPES);
+    provider.setCustomParameters({
+      'prompt': 'consent', // Ensure user is prompted for consent every time
+      'access_type': 'offline' // Request a refresh token
+    });
+
+    signInWithPopup(this.auth, provider).then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken;
+      console.log(result);
+      console.log(credential);
+      console.log(accessToken);
+      gapi.client.setToken({access_token: accessToken})
+    })
+
   }
 
 
