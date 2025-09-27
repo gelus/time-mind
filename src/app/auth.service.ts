@@ -16,7 +16,7 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar';
 @Injectable({
   providedIn: 'root'
 })
-export class GAuthService {
+export class AuthService {
   auth: Auth;
   authClient: any;
   tokenClient: any;
@@ -60,8 +60,7 @@ export class GAuthService {
       throw (resp);
     }
     this.id_token = resp.credential;
-    //this.tokenClient.requestAccessToken({prompt: 'consent'});
-    this.tokenClient.requestAccessToken({prompt: ''});
+    this.tokenClient.requestAccessToken({prompt: 'consent'});
   }
 
   private handleAccessTokenResponse = async (resp: any) => {
@@ -70,7 +69,6 @@ export class GAuthService {
     }
     this.access_token = resp.access_token;
     console.log('Google auth flow complete, authenticating with fire base');
-    this.listUpcomingEvents();
 
     const credential = GoogleAuthProvider.credential(this.id_token, this.access_token);
     const userCredentials = await signInWithCredential(this.auth, credential)
@@ -91,40 +89,14 @@ export class GAuthService {
         user,
       }
       this.user = user;
+
+      this.tokenClient.requestAccessToken({ prompt: 'none' });
     } else {
       console.log('User Not signed in');
       // Redirect to log in page?
     }
   }
 
-  async listUpcomingEvents() {
-    let response;
-    try {
-      const request = {
-        'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 10,
-        'orderBy': 'startTime',
-      };
-      response = await gapi.client.calendar.events.list(request);
-    } catch (err: any) {
-      (document.getElementById('content') as any).innerText = err.message;
-      return;
-    }
-
-    const events = response.result.items;
-    if (!events || events.length == 0) {
-      (document.getElementById('content') as any).innerText = 'No events found.';
-      return;
-    }
-    // Flatten to string to display
-    const output = events.reduce(
-      (str: any, event: {summary: any; start: {dateTime: any; date: any;};}) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
-      'Events:\n');
-    (document.getElementById('content') as any).innerText = output;
-  }
 
   firebaseFlow() {
     signInWithPopup(this.auth, this.provider).then((result) => {

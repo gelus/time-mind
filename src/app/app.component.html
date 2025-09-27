@@ -1,17 +1,7 @@
-
-<div id="google-button-div" #signInButton></div>
-<button (click)=gAuth.firebaseFlow()>Firebase popup flow</button>
-Loggin status {{gAuth.user ? 'Logged in':'Logged out'}}
-<!--@if(authService.ready) {-->
-  <!--@if(authService.user(); as user) {-->
-    <!--Hello, {{user.displayName}}.-->
-    <!--<button (click)=authService.signOut()>Sign Out</button>-->
-  <!--} @else {-->
-    <!--<button (click)=authService.signIn()>Sign In</button>-->
-  <!--}-->
-<!--}-->
+<button (click)=auth.firebaseFlow()>Firebase popup flow</button>
+Loggin status {{auth.user ? 'Logged in':'Logged out'}}
 <hr/>
-Calendar content <button (click)=gAuth.listUpcomingEvents()>Get it</button>
+Calendar content <button (click)=listUpcomingEvents()>Get it</button>
 <div id="content"></div>
 <hr/>
 <textarea [(ngModel)]=prompt style="width: 100%; height: 100px;"></textarea>
