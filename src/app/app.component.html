@@ -1,6 +1,7 @@
 
 <div id="google-button-div" #signInButton></div>
-<button (click)=gAuth.firebaseFlow()>Firebase flow login</button>
+<button (click)=gAuth.firebaseFlow()>Firebase popup flow</button>
+Loggin status {{gAuth.user ? 'Logged in':'Logged out'}}
 <!--@if(authService.ready) {-->
   <!--@if(authService.user(); as user) {-->
     <!--Hello, {{user.displayName}}.-->
