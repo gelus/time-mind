@@ -1,8 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { model } from './firebase.config';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from './auth.service';
+import {AiService} from './ai.service';
+import { functions } from './ai-functions';
 
 declare var gapi: any;
 
@@ -14,21 +15,22 @@ declare var gapi: any;
 })
 export class AppComponent {
   @ViewChild('signInButton') signInButton!: ElementRef;
-  prompt = 'Write a story about a magic backpack.';
+  prompt = 'Schedule an example call for today at 5, should only need an hour, (today is sep 28th 2025), makeup a nice title and description';
   responseText: string = '';
   chat;
 
   constructor (
     protected auth: AuthService,
+    protected ai: AiService
   ) {
-    this.chat = model.startChat();
+    this.chat = this.ai.model.startChat();
   }
 
   async go() {
 
     console.log('click');
     try {
-      const result = await this.chat.sendMessage(this.prompt);
+      const result = await this.ai.sendChat(this.prompt);
       const response = result.response;
       this.responseText = response.text();
     } catch (e) {
@@ -37,22 +39,10 @@ export class AppComponent {
 
   }
 
-  async listUpcomingEvents() {
-    let response;
-    try {
-      const request = {
-        'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 10,
-        'orderBy': 'startTime',
-      };
-      response = await gapi.client.calendar.events.list(request);
-    } catch (err: any) {
-      (document.getElementById('content') as any).innerText = err.message;
-      return;
-    }
+  async testButtonFunction() {
+    const minDate = new Date('November 9, 2025');
+    const maxDate = new Date('November 13, 2025');
+    const response = await functions.GetEvents({timeMin: minDate.toISOString(), timeMax: maxDate.toISOString()});
 
     const events = response.result.items;
     if (!events || events.length == 0) {
@@ -64,5 +54,6 @@ export class AppComponent {
       (str: any, event: {summary: any; start: {dateTime: any; date: any;};}) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
       'Events:\n');
     (document.getElementById('content') as any).innerText = output;
+    console.log(response)
   }
 }

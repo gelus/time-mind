@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAI, getGenerativeModel, GoogleAIBackend, InferenceMode } from "firebase/ai";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,9 +20,3 @@ export const firebaseConfig = {
 export const firebaseApp = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(firebaseApp);
 
-// Initialize the Gemini Developer API backend service
-export const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
-
-// Create a `GenerativeModel` instance
-// Set the mode, for example to use on-device model when possible
-export const model = getGenerativeModel(ai, { mode: InferenceMode.PREFER_ON_DEVICE });
