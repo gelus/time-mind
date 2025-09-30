@@ -1,29 +1,29 @@
 import * as userConfig from '../user-config';
 import {Schema} from "firebase/ai";
-import { eventSchema } from './schema.util';
+import {eventSchemaWithId} from './schema.util';
 
 declare const gapi: any;
 
-export const CreateEventsDeclaration = {
-  name: 'CreateEvents',
-  description: 'Create events on the calendar. Makes a live api calls for each event object passed in.',
+export const UpdateEventsDeclaration = {
+  name: 'UpdateEvents',
+  description: 'Update Existing Events by array, The entire event object must be provided for every updated event.',
   parameters: Schema.object({
     properties: {
-      "events": Schema.array({
-        "description": "an array of events to be created.",
-        items: eventSchema
+      'events': Schema.array({
+        description: 'An array of complete event objects with their updated values, Unchanged values must be passed in as they are.',
+        items: eventSchemaWithId
       })
     }
   })
 };
 
-export const CreateEvents = async ({events}: {events: {summary:string, description:string, startData: any, endData: any}[]}) => {
+console.log(UpdateEventsDeclaration)
 
-
-  console.log('Creating Event', events);
+export const UpdateEvents = async ({events}: {events: {summary:string, description:string, startData: any, endData: any, eventId: string}[]}) => {
+  console.log('Update Events', events);
 
   try {
-    const results = await Promise.all(events.map(({summary, description, startData, endData}) => {
+    const results = await Promise.all(events.map(({summary, description, startData, endData, eventId}) => {
       const start = {timeZone: userConfig.timeZone, date: undefined, dateTime: undefined};
       const end = {timeZone: userConfig.timeZone, date: undefined, dateTime: undefined};
 
@@ -37,10 +37,10 @@ export const CreateEvents = async ({events}: {events: {summary:string, descripti
 
       const request = {
         'calendarId': userConfig.calendarId,
-        summary, description, end, start,
+        eventId, summary, description, end, start,
       };
 
-      return gapi.client.calendar.events.insert(request);
+      return gapi.client.calendar.events.update(request);
     }));
 
     console.log(results);
@@ -51,5 +51,4 @@ export const CreateEvents = async ({events}: {events: {summary:string, descripti
   } catch (err: any) {
     return err;
   }
-
-};
+}
