@@ -17,8 +17,6 @@ export const UpdateEventsDeclaration = {
   })
 };
 
-console.log(UpdateEventsDeclaration)
-
 export const UpdateEvents = async ({events}: {events: {summary:string, description:string, startData: any, endData: any, eventId: string}[]}) => {
   console.log('Update Events', events);
 

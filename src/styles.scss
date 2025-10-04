@@ -1,1 +1,190 @@
-/* You can add global styles to this file, and also import other style files */
+// CSS RESET
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+  color: var(--color-secondary-text)
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+textarea {
+  outline: none;
+  border-radius: var(--border-radius);
+  padding: 0.75rem;
+  border: solid 1px var(--color-border);
+  box-sizing: border-box;
+}
+
+/* new rules */
+body {
+  --border-radius: 8px;
+  --border-radius-2: 16px;
+	line-height: 1;
+  font-size: 16px;
+  background-color: var(--color-background);
+  color: var(--color-primary-text);
+  font-family: "Roboto", sans-serif;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-primary-text)
+}
+h1 { font-size: 2.25rem; padding-bottom: 1.125rem; }    /* ~36px if 16px base */
+h2 { font-size: 1.875rem; padding-bottom: 0.9375rem; }   /* ~30px */
+h3 { font-size: 1.5rem; padding-bottom: 0.75rem; }     /* ~24px */
+h4 { font-size: 1.25rem; padding-bottom: 0.625rem; }    /* ~20px */
+h5 { font-size: 1.125rem; padding-bottom: 0.5625rem; }   /* ~18px */
+h6 { font-size: 1rem; padding-bottom: 0.5rem; }       /* ~16px */
+
+/* Buttons */
+button {
+  font-family: inherit;
+  background-color: var(--color-surface);
+  color: var(--color-primary-text);
+  border: solid 1px var(--color-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+  &[disabled] {
+    opacity: 0.75;
+    pointer-events: none;
+  }
+  &:hover {
+    background-color: var(--color-border);
+    color: var(--color-primary-text);
+    &:active {
+      opacity: 0.75;
+    }
+  }
+  &.circle {
+    border-radius: 50%;
+    padding: 0.75em;
+    &.small {
+      padding: 0.25em;
+    }
+  }
+  &.naked {
+    background-color: transparent;
+    border: none;
+    color: var(--color-primary-text);
+    &:hover {
+      background-color: var(--color-overlay);
+    }
+  }
+  &.accent {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-accent) 80%, var(--color-hover-tint) 20%);
+    }
+  }
+  &.error {
+    background-color: var(--color-error);
+    color: var(--color-background);
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-error) 80%, var(--color-hover-tint) 20%);
+    }
+  }
+  &.success{
+    background-color: var(--color-success);
+    color: var(--color-background);
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-success) 80%, var(--color-hover-tint) 20%);
+    }
+  }
+  &.warning{
+    background-color: var(--color-warning);
+    color: var(--color-background);
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-warning) 80%, var(--color-hover-tint) 20%);
+    }
+  }
+  &.info {
+    background-color: var(--color-info);
+    color: var(--color-background);
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-info) 80%, var(--color-hover-tint) 20%);
+    }
+  }
+}
+
+/* Alerts */
+.alert {
+  background-color: var(--color-overlay);
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--color-primary-text);
+  margin-top: 2rem;
+  &.error{ background-color: var(--color-error); color: var(--color-background);}
+  &.success{ background-color: var(--color-success); color: var(--color-background);}
+  &.warning{ background-color: var(--color-warning); color: var(--color-background);}
+  &.info{ background-color: var(--color-info); color: var(--color-background);}
+}
+
+//Icons -
+// DOCS: https://developers.google.com/fonts/docs/material_symbols
+// see https://fonts.google.com/icons for what icons are available
+// to add new icons, add the Icon Name to the comma separated list in index.html
+
+// use <elm class="material-symbols-outlined">[icon name]</elm>
+// good elements to use are i span or button
+
+/* Recommended icon sizes */
+.material-symbols-outlined.size-20 {
+  font-size: 20px;
+  font-variation-settings: 'OPSZ' 20;
+}
+.material-symbols-outlined.size-24 {
+  font-size: 24px;
+  font-variation-settings: 'OPSZ' 24;
+}
+.material-symbols-outlined.size-40 {
+  font-size: 40px;
+  font-variation-settings: 'OPSZ' 40;
+}
+.material-symbols-outlined.size-48 {
+  font-size: 48px;
+  font-variation-settings: 'OPSZ' 48;
+}

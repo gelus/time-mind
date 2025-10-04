@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential, signInWithPopup} from 'firebase/auth';
+import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential, signInWithPopup, signOut} from 'firebase/auth';
 
 declare var google: any;
 declare var gapi: any;
@@ -24,6 +24,7 @@ export class AuthService {
   access_token?: string;
   user?: User;
   provider: any;
+  gapiResolved: Promise<void>;
 
   constructor() {
 
@@ -35,12 +36,15 @@ export class AuthService {
     onAuthStateChanged(this.auth, this.onAuthStateChangedHandle)
 
     // init gapi
-    gapi.load('client', async () => {
-      await gapi.client.init({
-        apiKey: API_KEY,
-        discoveryDocs: [DISCOVERY_DOC],
+    this.gapiResolved = new Promise((resolve) => {
+      gapi.load('client', async () => {
+        await gapi.client.init({
+          apiKey: API_KEY,
+          discoveryDocs: [DISCOVERY_DOC],
+        });
+        resolve();
       });
-    });
+    })
 
     this.authClient = google.accounts.id.initialize({
       client_id: CLIENT_ID,
@@ -90,23 +94,32 @@ export class AuthService {
       }
       this.user = user;
 
-      this.tokenClient.requestAccessToken({ prompt: 'none' });
+      //this.tokenClient.requestAccessToken({ prompt: 'none' });
     } else {
+      delete this.user;
       console.log('User Not signed in');
       // Redirect to log in page?
     }
   }
 
-
-  firebaseFlow() {
-    signInWithPopup(this.auth, this.provider).then((result) => {
+  async firebaseFlow() {
+    try {
+      await this.gapiResolved;
+      const result = await signInWithPopup(this.auth, this.provider)
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const accessToken = credential?.accessToken;
       console.log(result);
       console.log(credential);
       console.log(accessToken);
       gapi.client.setToken({access_token: accessToken})
-    })
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async signOut() {
+    delete this.user;
+    await signOut(this.auth);
   }
 
 }

@@ -1,14 +1,2 @@
-<button (click)=auth.firebaseFlow()>Firebase popup flow</button>
-Loggin status {{auth.user ? 'Logged in':'Logged out'}}
-<hr/>
-Calendar content <button (click)=testButtonFunction()>Test Button</button>
-<div id="content"></div>
-<hr/>
-<textarea [(ngModel)]=prompt style="width: 100%; height: 100px;"></textarea>
-<br />
-<button (click)=go()>Go</button>
-
-<hr/>
-Response
-
-<pre style="white-space: pre-wrap">{{responseText}}</pre>
+<app-header />
+<router-outlet />

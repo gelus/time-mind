@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  max-width: 50vh;
+}
+
+.response {
+  flex: 1 1 auto;
+  white-space: pre-wrap;
+}
