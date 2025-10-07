@@ -1,10 +1,12 @@
-<input [(ngModel)]="task.summary" />
+<input [(ngModel)]="task.summary" placeholder="Task Summary"/>
 <textarea [(ngModel)]="task.description" placeholder="Add a description to your task."></textarea>
 <div class="time-estimate">
   <label name="time-estimate">Time Esitmate: <input type=number min=0 step="0.5" [(ngModel)]=task.timeEstimate/> Hrs</label>
 </div>
 <div class="controls">
-  <button class="material-symbols-outlined error">delete</button>
+  @if(task.id) {
+    <button class="material-symbols-outlined error" (click)="deleteTask()">delete</button>
+  }
   <button class="material-symbols-outlined" (click)="modalService.close()">close</button>
   <button class="material-symbols-outlined success" (click)="saveTask()">check</button>
 </div>

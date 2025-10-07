@@ -1,5 +1,23 @@
 import {Schema} from "firebase/ai";
 
+export const taskSchema = Schema.object({
+  properties: {
+    "id": Schema.string({
+      "description": "UUID to uniqly identify the task, only provide if you have an id, otherwise leave off this field to create a new task."
+    }),
+    "summary": Schema.string({
+      "description": "The title of the task."
+    }),
+    "description": Schema.string({
+      "description": "The Description of the event, be as detailed as you can."
+    }),
+    "timeEstimate": Schema.number({
+      "description": "An estimate in Hours, for how long this task will take to complete, decimals are acceptable."
+    }),
+  },
+  optionalProperties: ["id", "description", "timeEstimate"],
+});
+
 export const eventSchema = Schema.object({
   properties: {
     "summary": Schema.string({

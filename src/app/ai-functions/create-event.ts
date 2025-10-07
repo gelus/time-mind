@@ -21,6 +21,7 @@ export const CreateEvents = async ({events}: {events: {summary:string, descripti
 
 
   console.log('Creating Event', events);
+  const messageArray: string[] = [];
 
   try {
     const results = await Promise.all(events.map(({summary, description, startData, endData}) => {
@@ -40,15 +41,20 @@ export const CreateEvents = async ({events}: {events: {summary:string, descripti
         summary, description, end, start,
       };
 
+      messageArray.push(summary);
+
       return gapi.client.calendar.events.insert(request);
     }));
 
     console.log(results);
 
+    (window as any).toastr.success(messageArray.join('<br />'),'Events Created');
     return {results};
 
 
   } catch (err: any) {
+
+    (window as any).toastr.error("Something Went Wrong...");
     return err;
   }
 

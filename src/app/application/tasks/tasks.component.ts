@@ -55,7 +55,7 @@ export class TasksComponent {
 
   async getTasks() {
     const tasks = await GetTasks();
-    this.taskList = tasks.concat(this.taskListfiller);
+    this.taskList = tasks.tasks;
     console.log(tasks);
   }
 

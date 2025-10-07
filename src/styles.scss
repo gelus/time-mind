@@ -177,6 +177,7 @@ button {
 }
 
 //Icons -
+// https://fonts.google.com/icons
 // DOCS: https://developers.google.com/fonts/docs/material_symbols
 // see https://fonts.google.com/icons for what icons are available
 // to add new icons, add the Icon Name to the comma separated list in index.html
@@ -201,3 +202,31 @@ button {
   font-size: 48px;
   font-variation-settings: 'OPSZ' 48;
 }
+
+
+/* Toastr styles */
+.ngx-toastr.time-mind-toast {
+  box-shadow: var(--box-shadow);
+  .toast-title {
+    color: var(--color-background);
+  }
+  .toast-message {
+    padding-top: 0.5rem;
+    color: var(--color-background);
+  }
+  &.toast-success {
+    background-color: var(--color-success);
+  }
+  &.toast-error {
+    background-color: var(--color-error);
+  }
+  &.toast-warning {
+    background-color: var(--color-warning);
+  }
+  &.toast-info {
+    background-color: var(--color-info);
+  }
+}
+
+
+

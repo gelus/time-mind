@@ -1,0 +1,41 @@
+import { writeBatch, doc } from "firebase/firestore";
+import { db } from '../firebase.config';
+import { Task } from  './get-tasks'
+import {Schema} from "firebase/ai";
+import {taskSchema} from "./schema.util";
+import { getUser } from "../auth.service";
+
+export const CreateUpdateTasksDeclaration = {
+  name: "CreateUpdateTasks",
+  description: "Add/Create a new task, or update an existing Tasks on the users task list. Task without an id will be created, task that have a valid id will be updated",
+  parameters: Schema.object({
+    properties: {
+      "tasks": Schema.array({
+        "description": "an array of tasks to be created or updated, task without an id will be created, task that have a valid id will be updated.",
+        items: taskSchema
+      })
+    }
+  })
+}
+
+export const CreateUpdateTasks = async ({tasks}:{tasks:Task[]}) => {
+  const batch = writeBatch(db);
+  const user = getUser();
+  const messageArray = [];
+
+  if (user) {
+    for(const task of tasks) {
+      if (!task.id) task.id = crypto.randomUUID();
+      messageArray.push(task.summary);
+      task.userId = user.uid;
+      const taskRef = doc(db, 'tasks', task.id);
+      batch.set(taskRef, task, {merge: true});
+    }
+
+    await batch.commit();
+    (window as any).toastr.success(messageArray.join('<br />'),'Tasks Updated');
+  } else {
+    (window as any).toastr.error("User Not Found");
+    throw "User Not Found"
+  }
+}

@@ -19,6 +19,7 @@ export const UpdateEventsDeclaration = {
 
 export const UpdateEvents = async ({events}: {events: {summary:string, description:string, startData: any, endData: any, eventId: string}[]}) => {
   console.log('Update Events', events);
+  const messageArray: string[] = [];
 
   try {
     const results = await Promise.all(events.map(({summary, description, startData, endData, eventId}) => {
@@ -38,15 +39,18 @@ export const UpdateEvents = async ({events}: {events: {summary:string, descripti
         eventId, summary, description, end, start,
       };
 
+      messageArray.push(summary);
       return gapi.client.calendar.events.update(request);
     }));
 
     console.log(results);
 
+    (window as any).toastr.success(messageArray.join('<br />'),'Events Updated');
     return {results};
 
 
   } catch (err: any) {
+    (window as any).toastr.error("Something Went Wrong");
     return err;
   }
 }

@@ -25,7 +25,6 @@ export const GetTasks = async () => {
   const tasks: Task[] = [];
   querySnapshot.forEach((doc) => {
     tasks.push(doc.data() as Task);
-    console.log(doc.id, " => ", doc.data());
   });
-  return tasks;
+  return {tasks};
 }

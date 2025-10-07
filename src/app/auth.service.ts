@@ -14,6 +14,9 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/calendar';
 
+let __user: User|null = null;
+export const getUser = ():User|null => __user;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -95,8 +98,8 @@ export class AuthService {
         user,
       }
       this.user = user;
+      __user = user;
       this.user$.next(user);
-      console.log('uid', user.uid)
 
       //this.tokenClient.requestAccessToken({ prompt: 'none' });
     } else {

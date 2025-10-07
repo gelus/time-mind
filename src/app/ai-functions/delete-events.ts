@@ -31,10 +31,11 @@ export const DeleteEvents = async ({eventIds}: {eventIds: string[]}) => {
     }))
 
     console.log(ret);
-
+    (window as any).toastr.success('Events have been removed');
     return {results: ret};
 
   } catch (err: any) {
+    (window as any).toastr.error("Something Went Wrong");
     return err;
   }
 }
