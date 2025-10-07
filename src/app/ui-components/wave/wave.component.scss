@@ -13,6 +13,9 @@
     &[surface] .shape-fill {
       fill: var(--color-background);
     }
+    &[overlay] .shape-fill {
+      fill: var(--color-overlay);
+    }
 }
 
 svg {

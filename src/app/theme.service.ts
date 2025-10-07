@@ -17,7 +17,7 @@ private themes: Record<'lightTheme' | 'darkTheme', Record<string, string>> = {
     'color-accent':         '#8B5CF6',       // bright purple accent for buttons/links
     'color-highlight':      '#EDE9FE',       // very light lavender highlight for hover/cards
     'color-border':         '#CBD5E1',       // light border
-    'color-overlay':        'rgba(0,0,0,0.03)',
+    'color-overlay':        'rgba(0,0,0,0.65)',
     'color-hover':          '#A78BFA',       // brighter purple for hover
     'color-hover-tint':     '#000000',       // tint dark on the light theme
     'color-error':          '#EF4444',       // bright red
@@ -35,7 +35,7 @@ private themes: Record<'lightTheme' | 'darkTheme', Record<string, string>> = {
     'color-accent':         '#8B5CF6',       // bright purple accent
     'color-highlight':      '#4C2D91',       // darker purple highlight for dark theme
     'color-border':         '#475569',       // subtle border
-    'color-overlay':        'rgba(255,255,255,0.05)',
+    'color-overlay':        'rgba(255,255,255,0.65)',
     'color-hover':          '#7C3AED',       // brighter purple hover
     'color-hover-tint':     '#FFFFFF',       // tint light on the dark theme
     'color-error':          '#F87171',       // bright red

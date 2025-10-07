@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential, signInWithPopup, signOut} from 'firebase/auth';
+import {ReplaySubject, Subject} from 'rxjs';
 
 declare var google: any;
 declare var gapi: any;
@@ -23,6 +24,7 @@ export class AuthService {
   id_token?: string;
   access_token?: string;
   user?: User;
+  user$ = new ReplaySubject<User|null>(1);
   provider: any;
   gapiResolved: Promise<void>;
 
@@ -93,9 +95,12 @@ export class AuthService {
         user,
       }
       this.user = user;
+      this.user$.next(user);
+      console.log('uid', user.uid)
 
       //this.tokenClient.requestAccessToken({ prompt: 'none' });
     } else {
+      this.user$.next(null);
       delete this.user;
       console.log('User Not signed in');
       // Redirect to log in page?

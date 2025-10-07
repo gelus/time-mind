@@ -54,10 +54,23 @@ textarea {
   box-sizing: border-box;
 }
 
+input {
+  border: none;
+  outline: none;
+  border-bottom: solid 1px var(--color-border);
+
+}
+
+small {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
 /* new rules */
 body {
   --border-radius: 8px;
   --border-radius-2: 16px;
+  --header-height: 65px;
 	line-height: 1;
   font-size: 16px;
   background-color: var(--color-background);

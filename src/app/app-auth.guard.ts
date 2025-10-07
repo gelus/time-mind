@@ -1,17 +1,23 @@
 import { CanActivateFn, RedirectCommand, Router } from '@angular/router';
 import {AuthService} from './auth.service';
 import {inject} from '@angular/core';
+import {switchMap, take} from 'rxjs';
+import {User} from 'firebase/auth';
 
-export const appAuthGuard: CanActivateFn = async (route, state) => {
+export const appAuthGuard: CanActivateFn = (/*route, state*/) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  if (auth.user) return true;
+  return auth.user$.pipe(
+    take(1),
+    switchMap(async (user: User|null) => {
+      if (user) return true;
+      await auth.firebaseFlow()
+      if (auth.user) return true;
 
-  await auth.firebaseFlow();
+      const landingPath = router.parseUrl("/");
+      return new RedirectCommand(landingPath);
+    })
+  )
 
-  if (auth.user) return true;
-
-  const landingPath = router.parseUrl("/");
-  return new RedirectCommand(landingPath);
 };

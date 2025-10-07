@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  font-size: 2rem;
+  padding: 0.5rem;
+  &[type=number]{
+    field-sizing: content;
+    min-width: 5rem;
+  }
+}
+
+textarea {
+  border: none;
+  border-bottom: solid 1px var(--color-border);
+  border-radius: 0;
+  resize: none;
+  min-height: 7rem;
+  max-height: 50vh;
+  field-sizing: content;
+}
+
+.controls {
+  padding-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  button.error {
+    margin-right: auto;
+  }
+}

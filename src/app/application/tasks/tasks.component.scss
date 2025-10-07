@@ -1,0 +1,99 @@
+:host {
+  overflow: auto;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 0.25rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.task-list {
+  overflow: auto;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 1rem;
+
+}
+
+.task {
+  border: solid 1px var(--color-border);
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  opacity: 0;
+  transform: scale(0.75);
+  transition: all 0.25s;
+  &.intersect-show {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px var(--color-border);
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.55rem;
+    h3 {
+      padding: 0;
+    }
+    button {
+      margin-left: auto;
+    }
+  }
+  div.description {
+    box-sizing: border-box;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.25s linear;
+    &.open {
+      height: auto;
+      opacity: 1;
+    }
+    p {
+      border-bottom: solid 1px var(--color-border);
+      padding-bottom: 0.35rem;
+      margin-bottom: 0.55rem
+    }
+  }
+
+  .task-controls {
+    display: flex;
+    gap: 1rem;
+
+    app-progress-bar {
+      flex: 1 1 auto;
+    }
+    .task-menu {
+      display: flex ;
+      justify-content: end;
+      margin-left: auto;
+      background: var(--color-background);
+      border-radius: var(--border-radius-2);
+      width: 32px;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: width 0.5s;
+      &:hover {
+        width: 96px;
+      }
+
+      button {
+        border: solid 1px var(--color-background);
+        &:hover {
+          border-color: var(--color-surface);
+        }
+      }
+    }
+  }
+
+}

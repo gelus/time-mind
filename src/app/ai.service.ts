@@ -23,6 +23,7 @@ export class AiService {
       mode: InferenceMode.PREFER_IN_CLOUD,
     } as ModelParams);
 
+    console.log('Tools', tools);
     this.chat = this.model.startChat({
       history: [],
       tools: tools,

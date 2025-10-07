@@ -1,0 +1,41 @@
+:host.modal-open {
+  .overlay {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .wrapper {
+    transform: translate(-50%, 0);
+  }
+}
+
+.overlay {
+  position: fixed;
+  background: var(--color-overlay);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  transition: all 0.25s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wrapper {
+  position: fixed;
+  width: 75%;
+  min-height: 5rem;
+  max-height: calc(100% - 6rem);
+  overflow: auto;
+  padding: 2rem;
+  top: 3rem;
+  left: 50%;
+  background: var(--color-surface);
+  border: solid 1px var(--color-border);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  transform: translate(-50%, -100vh);
+  transition: transform 0.25s ease;
+  z-index: 11;
+}

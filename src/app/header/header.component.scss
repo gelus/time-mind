@@ -1,5 +1,7 @@
 :host {
   position: sticky;
+  box-sizing: border-box;
+  height: var(--header-height);
   top: 0;
   z-index:10;
   display: flex;
