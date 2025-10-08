@@ -28,8 +28,13 @@ export const CreateUpdateTasks = async ({tasks}:{tasks:Task[]}) => {
       if (!task.id) task.id = crypto.randomUUID();
       messageArray.push(task.summary);
       task.userId = user.uid;
+      const storedFields = (
+        ({ id, userId, summary, complete, description, timeEstimate, timeCompleted }) =>
+        ({ id, userId, summary, complete, description, ...(timeEstimate?{timeEstimate}:{}), ...(timeCompleted?{timeCompleted}:{}) })
+      )(task);
       const taskRef = doc(db, 'tasks', task.id);
-      batch.set(taskRef, task, {merge: true});
+      console.log(storedFields);
+      batch.set(taskRef, storedFields, {merge: true});
     }
 
     await batch.commit();

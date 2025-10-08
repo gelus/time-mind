@@ -35,6 +35,25 @@
     opacity: 1;
     transform: scale(1);
   }
+  &.complete {
+    opacity: 0.5;
+    background-color: var(--color-success);
+    h3, p {
+      color: var(--color-background);
+    }
+  }
+  &.exit-animation {
+    animation: exitAnimation 1s linear forwards;
+  }
+
+  @keyframes exitAnimation {
+    from {
+      transform: translateX(0)
+    }
+    to {
+      transform: translateX(100%)
+    }
+  }
 
   header {
     display: flex;

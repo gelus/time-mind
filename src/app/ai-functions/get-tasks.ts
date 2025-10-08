@@ -5,6 +5,7 @@ export interface Task {
   id: string;
   userId: string;
   summary: string;
+  complete?: boolean;
   description?: string;
   open?: boolean;
   timeEstimate?: number; // time estimate in hours
