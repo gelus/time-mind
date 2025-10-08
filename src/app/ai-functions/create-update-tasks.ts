@@ -29,8 +29,8 @@ export const CreateUpdateTasks = async ({tasks}:{tasks:Task[]}) => {
       messageArray.push(task.summary);
       task.userId = user.uid;
       const storedFields = (
-        ({ id, userId, summary, complete, description, timeEstimate, timeCompleted }) =>
-        ({ id, userId, summary, complete, description, ...(timeEstimate?{timeEstimate}:{}), ...(timeCompleted?{timeCompleted}:{}) })
+        ({ id, userId, summary, complete=false, description='', timeEstimate=0, timeCompleted=0 }) =>
+        ({ id, userId, summary, complete,       description,    timeEstimate,   timeCompleted   })
       )(task);
       const taskRef = doc(db, 'tasks', task.id);
       console.log(storedFields);

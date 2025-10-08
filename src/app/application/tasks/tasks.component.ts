@@ -6,21 +6,20 @@ import {IntersectionObserverDirective} from '../../ui-components/intersection-ob
 import {ModalService} from '../../modal.service';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import {CreateUpdateTasks} from '../../ai-functions/create-update-tasks';
-
-function random(min: any, max: any) {
-  const x = (Math.random()*(max-min)) + min;
-  return x
-}
+import {FormsModule} from '@angular/forms';
+import {SearchPipe} from './search.pipe';
 
 @Component({
   selector: 'app-tasks',
-  imports: [CommonModule, ProgressBarComponent, IntersectionObserverDirective],
+  imports: [CommonModule, FormsModule, ProgressBarComponent, IntersectionObserverDirective, SearchPipe],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss'
 })
 export class TasksComponent {
 
   taskList = signal<Task[]>([]);
+  showCompleted = false;
+  searchString='';
 
   constructor(
     private modalService: ModalService,
@@ -30,13 +29,14 @@ export class TasksComponent {
 
   async getTasks() {
     const tasks = await GetTasks();
-    this.taskList.set(tasks.tasks);
+    const myTasks = tasks.tasks.filter(t => !!t.complete === this.showCompleted);
+    this.taskList.set(myTasks);
   }
 
   toggleComplete(task: Task) {
     task.complete = !task.complete;
     CreateUpdateTasks({tasks:[task]});
-    if (task.complete) {
+    if (task.complete && !this.showCompleted) {
       this.taskList.update(values => {
         const newItems = [...values];
         newItems.splice(newItems.indexOf(task), 1);

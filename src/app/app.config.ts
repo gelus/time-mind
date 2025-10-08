@@ -12,6 +12,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr({
       timeOut: 10000,
+      resetTimeoutOnDuplicate: true,
+      includeTitleDuplicates: true,
       enableHtml: true,
       progressBar: true,
       newestOnTop: false,

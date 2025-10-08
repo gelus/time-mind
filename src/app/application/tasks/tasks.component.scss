@@ -11,6 +11,15 @@
   display: flex;
   justify-content: end;
   align-items: center;
+  .search-label{
+    display: flex;
+    flex: 1 1 auto;
+  }
+  input {
+    background: transparent;
+    flex: 1 1 auto;
+    margin: 0 8px;
+  }
 }
 
 .task-list {
@@ -27,7 +36,7 @@
   border: solid 1px var(--color-border);
   background-color: var(--color-surface);
   border-radius: var(--border-radius);
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   opacity: 0;
   transform: scale(0.75);
   transition: all 0.25s;
@@ -36,32 +45,35 @@
     transform: scale(1);
   }
   &.complete {
-    opacity: 0.5;
     background-color: var(--color-success);
-    h3, p {
+    h6, p {
       color: var(--color-background);
     }
   }
   &.exit-animation {
-    animation: exitAnimation 1s linear forwards;
+    animation: exitAnimation .5s linear forwards;
+    animation-timing-function: cubic-bezier(0,-0.05,.51,-0.42);
   }
 
   @keyframes exitAnimation {
-    from {
-      transform: translateX(0)
+    0% {
+      transform: scale(1);
+      opacity: 1
     }
-    to {
-      transform: translateX(100%)
+    70% {
+      transform: scale(0);
+      opacity: 0
+    }
+    100% {
+      transform: scale(0);
+      opacity: 0
     }
   }
 
   header {
     display: flex;
     align-items: center;
-    border-bottom: solid 1px var(--color-border);
-    padding-bottom: 0.35rem;
-    margin-bottom: 0.55rem;
-    h3 {
+    h6 {
       padding: 0;
     }
     button {
@@ -69,20 +81,8 @@
     }
   }
   div.description {
-    box-sizing: border-box;
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.25s linear;
-    &.open {
-      height: auto;
-      opacity: 1;
-    }
-    p {
-      border-bottom: solid 1px var(--color-border);
-      padding-bottom: 0.35rem;
-      margin-bottom: 0.55rem
-    }
+    font-size: 0.85rem;
+    padding: 0.5rem 0;
   }
 
   .task-controls {

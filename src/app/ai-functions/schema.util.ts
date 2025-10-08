@@ -11,8 +11,14 @@ export const taskSchema = Schema.object({
     "description": Schema.string({
       "description": "The Description of the event, be as detailed as you can."
     }),
+    "complete": Schema.boolean({
+      "description": "mark true if the task has been completed, set to false if there is still work to be done."
+    }),
     "timeEstimate": Schema.number({
       "description": "An estimate in Hours, for how long this task will take to complete, decimals are acceptable."
+    }),
+    "timeCompleted": Schema.number({
+      "description": "time in Hours spent on this task. Can be logged to show progress."
     }),
   },
   optionalProperties: ["id", "description", "timeEstimate"],
