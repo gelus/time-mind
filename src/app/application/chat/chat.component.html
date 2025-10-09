@@ -1,3 +1,20 @@
-<div class="response">{{responseText}}</div>
-<textarea [(ngModel)]=prompt name=prompt (keyup)=handlekeyup($event) rows=5></textarea>
-<!--<button (click)=go()>Go</button>-->
+<div class="messages">
+  @for(message of messages; track $index) {
+  <div class="message" [appScrollTo] #prompt>
+    <div class="promptBlock">
+      <div class="prompt">{{message.prompt}}</div>
+    </div>
+    <div class="responseBlock">
+      @if (message.responseText(); as text) {
+        <div class="response" [appScrollTo]=prompt>{{text}}</div>
+      } @else {
+        loading...
+      }
+    </div>
+  </div>
+  }
+</div>
+<label class="textarea">
+  <textarea [(ngModel)]=prompt name=prompt (keyup)=handlekeyup($event) rows=5 placeholder="Enter Prompt"></textarea>
+  <button class="send-btn material-symbols-outlined size-20 naked circle small" (click)="go()" [ngClass]="{'show':prompt.length}">send</button>
+</label>

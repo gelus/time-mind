@@ -47,14 +47,17 @@ pre {
 }
 
 textarea {
+  font-family: "Roboto", sans-serif;
   outline: none;
   border-radius: var(--border-radius);
   padding: 0.75rem;
   border: solid 1px var(--color-border);
   box-sizing: border-box;
+  color: var(--color-text-primary);
 }
 
 input {
+  font-family: "Roboto", sans-serif;
   border: none;
   outline: none;
   border-bottom: solid 1px var(--color-border);
@@ -105,7 +108,7 @@ button {
     pointer-events: none;
   }
   &:hover {
-    background-color: var(--color-border);
+    background-color: var(--color-hover);
     color: var(--color-primary-text);
     &:active {
       opacity: 0.75;
@@ -123,7 +126,8 @@ button {
     border: none;
     color: var(--color-primary-text);
     &:hover {
-      background-color: var(--color-overlay);
+      background-color: var(--color-hover);
+      color: var(--color-primary-text);
     }
   }
   &.accent {

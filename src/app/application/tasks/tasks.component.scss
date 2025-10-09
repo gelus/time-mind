@@ -33,11 +33,11 @@
 }
 
 .task {
-  border: solid 1px var(--color-border);
   background-color: var(--color-surface);
   border-radius: var(--border-radius);
   padding: 0.5rem 1rem;
   opacity: 0;
+  border: solid 1px var(--color-background);
   transform: scale(0.75);
   transition: all 0.25s;
   &.intersect-show {

@@ -1,16 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AiService} from '../../ai.service';
+import {CommonModule} from '@angular/common';
+import {EnhancedGenerateContentResponse, GenerateContentResult} from 'firebase/ai';
+import {ScrollToDirective} from '../../scroll-to.directive';
+
+class Message {
+  prompt: string;
+  response?: EnhancedGenerateContentResponse;
+  responseText = signal<string>('');
+
+  constructor(prompt: string, resultPromise: Promise<GenerateContentResult>){
+    this.prompt = prompt;
+    resultPromise.then(result => {
+      this.response = result.response;
+      this.responseText.set(this.response.text());
+    });
+  }
+}
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule,],
+  imports: [CommonModule, FormsModule, ScrollToDirective],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
 
-  prompt = 'Prompt here.';
+  messages: Message[] = [];
+  prompt = '';
   responseText: string = '';
   chat;
 
@@ -21,19 +39,16 @@ export class ChatComponent {
   }
 
   handlekeyup(e: KeyboardEvent) {
-    if (e.code === 'Enter' && e.shiftKey === true) {
+    if (e.code === 'Enter' && e.shiftKey !== true) {
       this.go();
-      this.prompt = '';
     }
   }
 
   async go() {
 
-    console.log('click');
     try {
-      const result = await this.ai.sendChat(this.prompt);
-      const response = result.response;
-      this.responseText = response.text();
+      this.messages.push(new Message(this.prompt, this.ai.sendChat(this.prompt)))
+      this.prompt = '';
     } catch (e) {
       throw e;
     }

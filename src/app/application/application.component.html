@@ -1,5 +1,14 @@
+<main>
+  <app-chat />
+  @if (pane === 'calendar'){
+    <app-calendar />
+  } @else if (pane === 'tasks') {
+    <app-tasks />
+  }
+</main>
+<nav class="control" [ngClass]=pane>
+  <button class="calendar material-symbols-outlined size-20 naked circle small" (click)="togglePane('calendar')">calendar_today</button>
+  <button class="tasks material-symbols-outlined size-20 naked circle small" (click)="togglePane('tasks')">list</button>
+</nav>
 <app-wave />
 <app-wave invert />
-<app-chat />
-<app-calendar />
-<app-tasks />
