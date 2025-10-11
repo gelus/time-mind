@@ -1,6 +1,7 @@
 import { writeBatch, doc } from "firebase/firestore";
 import { db } from '../firebase.config';
 import {Schema} from "firebase/ai";
+import {messages$} from "../message.util";
 
 export const DeleteTasksDeclaration = {
   name: "DeleteTasks",
@@ -18,6 +19,8 @@ export const DeleteTasksDeclaration = {
 }
 
 export const DeleteTasks = async ({tasks}:{tasks:string[]}) => {
+
+  messages$.next('Removing Tasks');
   const batch = writeBatch(db);
 
     for(const taskId of tasks) {

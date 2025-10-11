@@ -1,6 +1,7 @@
 import * as userConfig from '../user-config';
 import {Schema} from "firebase/ai";
 import {eventSchemaWithId} from './schema.util';
+import {messages$} from '../message.util';
 
 declare const gapi: any;
 
@@ -18,7 +19,7 @@ export const UpdateEventsDeclaration = {
 };
 
 export const UpdateEvents = async ({events}: {events: {summary:string, description:string, startData: any, endData: any, eventId: string}[]}) => {
-  console.log('Update Events', events);
+  messages$.next('Updating Calendar Events');
   const messageArray: string[] = [];
 
   try {

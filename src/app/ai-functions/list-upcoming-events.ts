@@ -1,3 +1,4 @@
+import {messages$} from '../message.util';
 import * as userConfig from '../user-config';
 
 declare var gapi: any;
@@ -9,7 +10,7 @@ export const ListUpcomingEventsDeclaration = {
 
 export const ListUpcomingEvents = async (): Promise<any> => {
 
-  console.log('ListUpcomingEvents called');
+  messages$.next('Getting Upcoming Events');
 
   try {
     const request = {

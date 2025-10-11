@@ -1,3 +1,4 @@
+import {messages$} from '../message.util';
 import * as userConfig from '../user-config';
 import {Schema} from "firebase/ai";
 
@@ -19,7 +20,7 @@ export const DeleteEventsDeclaration = {
 }
 
 export const DeleteEvents = async ({eventIds}: {eventIds: string[]}) => {
-  console.log('delete events', eventIds)
+  messages$.next('Removing Calendar Events');
   try {
     const ret = await Promise.all(eventIds.map(id => {
       const request = {

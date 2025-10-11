@@ -6,9 +6,15 @@
     </div>
     <div class="responseBlock">
       @if (message.responseText(); as text) {
-        <div class="response" [appScrollTo]=prompt>{{text}}</div>
+        <span class="brain material-symbols-outlined size-40">network_intelligence_history</span>
+        <div class="response-text">
+          {{text}}
+        </div>
       } @else {
-        loading...
+        <span class="brain loading material-symbols-outlined size-40">network_intelligence_history</span>
+        <div class="response-text">
+          {{(loadingMessages$ | async) || 'Thinking'}}...
+        </div>
       }
     </div>
   </div>

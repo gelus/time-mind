@@ -4,20 +4,7 @@ import {AiService} from '../../ai.service';
 import {CommonModule} from '@angular/common';
 import {EnhancedGenerateContentResponse, GenerateContentResult} from 'firebase/ai';
 import {ScrollToDirective} from '../../scroll-to.directive';
-
-class Message {
-  prompt: string;
-  response?: EnhancedGenerateContentResponse;
-  responseText = signal<string>('');
-
-  constructor(prompt: string, resultPromise: Promise<GenerateContentResult>){
-    this.prompt = prompt;
-    resultPromise.then(result => {
-      this.response = result.response;
-      this.responseText.set(this.response.text());
-    });
-  }
-}
+import { messages$ } from '../../message.util';
 
 @Component({
   selector: 'app-chat',
@@ -27,7 +14,11 @@ class Message {
 })
 export class ChatComponent {
 
-  messages: Message[] = [];
+  loadingMessages$ = messages$;
+
+  messages: Message[] = [
+    new Message("Demo prompt", new Promise(() => {}))
+  ];
   prompt = '';
   responseText: string = '';
   chat;
@@ -56,3 +47,19 @@ export class ChatComponent {
   }
 
 }
+
+/// * Helper function/classes */
+class Message {
+  prompt: string;
+  response?: EnhancedGenerateContentResponse;
+  responseText = signal<string>('');
+
+  constructor(prompt: string, resultPromise: Promise<GenerateContentResult>){
+    this.prompt = prompt;
+    resultPromise.then(result => {
+      this.response = result.response;
+      this.responseText.set(this.response.text());
+    });
+  }
+}
+

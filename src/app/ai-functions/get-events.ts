@@ -1,3 +1,4 @@
+import {messages$} from '../message.util';
 import * as userConfig from '../user-config';
 import {Schema} from "firebase/ai";
 
@@ -22,7 +23,7 @@ export const GetEvents = async (
   {timeMin, timeMax}: {timeMin:string;timeMax:string}
 ) => {
 
-  console.log('GetEvents called');
+  messages$.next('Checking Calendar');
 
   try {
     const request = {

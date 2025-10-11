@@ -1,5 +1,6 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../firebase.config';
+import { messages$ } from "../message.util";
 
 export interface Task {
   id: string;
@@ -19,7 +20,7 @@ export const GetTasksDeclaration = {
 }
 
 export const GetTasks = async () => {
-  //const q = query(collection(db, "tasks"), where("userId", "==", ));
+  messages$.next('Checking Tasks');
   const q = query(collection(db, "tasks"));
 
   const querySnapshot = await getDocs(q);

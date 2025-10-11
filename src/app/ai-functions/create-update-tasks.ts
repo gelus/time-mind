@@ -4,6 +4,7 @@ import { Task } from  './get-tasks'
 import {Schema} from "firebase/ai";
 import {taskSchema} from "./schema.util";
 import { getUser } from "../auth.service";
+import {messages$} from "../message.util";
 
 export const CreateUpdateTasksDeclaration = {
   name: "CreateUpdateTasks",
@@ -22,6 +23,8 @@ export const CreateUpdateTasks = async ({tasks}:{tasks:Task[]}) => {
   const batch = writeBatch(db);
   const user = getUser();
   const messageArray = [];
+
+  messages$.next('Updating Tasks');
 
   if (user) {
     for(const task of tasks) {

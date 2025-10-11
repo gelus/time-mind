@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential, signInWithPopup, signOut} from 'firebase/auth';
-import {ReplaySubject, Subject} from 'rxjs';
+import {ReplaySubject} from 'rxjs';
 
 declare var google: any;
 declare var gapi: any;
