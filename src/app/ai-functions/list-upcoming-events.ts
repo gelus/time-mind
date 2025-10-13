@@ -1,5 +1,5 @@
 import {messages$} from '../message.util';
-import * as userConfig from '../user-config';
+import { PublicSettings } from "../application/settings/settings.service";
 
 declare var gapi: any;
 
@@ -12,10 +12,11 @@ export const ListUpcomingEvents = async (): Promise<any> => {
 
   messages$.next('Getting Upcoming Events');
 
+  const userConfig =  PublicSettings.userSettings;
+
   try {
     const request = {
-      //'calendarId': 'primary',
-      'calendarId': userConfig.calendarId,
+      'calendarId': userConfig?.calendar.id,
       'timeMin': (new Date()).toISOString(),
       'showDeleted': false,
       'singleEvents': true,

@@ -1,4 +1,4 @@
-import * as userConfig from '../user-config';
+import { PublicSettings } from "../application/settings/settings.service";
 import {Schema} from "firebase/ai";
 import { eventSchema } from './schema.util';
 import {messages$} from '../message.util';
@@ -22,22 +22,23 @@ export const CreateEvents = async ({events}: {events: {summary:string, descripti
 
   messages$.next('Creating Calendar Events');
   const messageArray: string[] = [];
+  const userConfig =  PublicSettings.userSettings;
 
   try {
     const results = await Promise.all(events.map(({summary, description, startData, endData}) => {
-      const start = {timeZone: userConfig.timeZone, date: undefined, dateTime: undefined};
-      const end = {timeZone: userConfig.timeZone, date: undefined, dateTime: undefined};
+      const start = {timeZone: userConfig?.calendar.timeZone, date: undefined, dateTime: undefined};
+      const end = {timeZone: userConfig?.calendar.timeZone, date: undefined, dateTime: undefined};
 
       if (startData.date) start.date = startData.date;
       if (endData.date) end.date = endData.date;
       if (startData.dateTime) start.dateTime = startData.dateTime;
       if (endData.dateTime) end.dateTime = endData.dateTime;
 
-      start.timeZone = userConfig.timeZone;
-      end.timeZone = userConfig.timeZone;
+      start.timeZone = userConfig?.calendar.timeZone;
+      end.timeZone = userConfig?.calendar.timeZone;
 
       const request = {
-        'calendarId': userConfig.calendarId,
+        'calendarId': userConfig?.calendar.id,
         summary, description, end, start,
       };
 

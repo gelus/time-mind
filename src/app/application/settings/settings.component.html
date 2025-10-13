@@ -1,0 +1,36 @@
+@if( settingsService.userSettings$ | async; as settings) {
+
+  <div class="wrapper">
+
+    <div class="setting-block">
+      <label>User Calendar</label>
+      <app-calendar-list accessRole=owner [calendar]="settings.calendar" (calendarUpdated)="settingsService.saveUserSettings({calendar: $event})" />
+    </div>
+
+    <!--<div class="setting-block">-->
+      <!--<label>-->
+        <!--Be Aware of These Calendars;-->
+        <!--<input />-->
+      <!--</label>-->
+    <!--</div>-->
+
+    <div class="setting-block">
+        <label>Theme</label>
+        <app-theme-toggle />
+    </div>
+
+    <!--<button (click)="settingsService.saveUserSettings(settings)" class="save-btn info">Save</button>-->
+
+  </div>
+
+}
+
+
+
+  <!--<app-calendar-list accessRole=owner />-->
+    <!--<br />-->
+
+  <!--<app-calendar-list />-->
+
+<app-wave />
+<app-wave invert />

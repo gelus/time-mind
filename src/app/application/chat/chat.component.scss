@@ -27,7 +27,7 @@
   background: var(--color-surface);
   border-radius: 32px;
   border-top-right-radius: 0;
-  border: solid 1px var(--color-background);
+  border: solid 3px var(--color-background);
 }
 
 .responseBlock{
@@ -40,6 +40,7 @@
 .response-text {
   padding-top: 13px;
   padding-left: 1rem;
+  white-space: pre-wrap;
 }
 
 .brain {

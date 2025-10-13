@@ -1,5 +1,5 @@
+import { PublicSettings } from "../application/settings/settings.service";
 import {messages$} from '../message.util';
-import * as userConfig from '../user-config';
 import {Schema} from "firebase/ai";
 
 declare const gapi: any;
@@ -21,10 +21,12 @@ export const DeleteEventsDeclaration = {
 
 export const DeleteEvents = async ({eventIds}: {eventIds: string[]}) => {
   messages$.next('Removing Calendar Events');
+  const userConfig =  PublicSettings.userSettings;
+
   try {
     const ret = await Promise.all(eventIds.map(id => {
       const request = {
-        'calendarId': userConfig.calendarId,
+        'calendarId': userConfig?.calendar.id,
         'eventId': id,
       };
       console.log(request)

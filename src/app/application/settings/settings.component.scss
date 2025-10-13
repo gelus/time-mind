@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 2rem;
+}
+
+.wrapper {
+  position: relative;
+  width: min(95%, 500px);
+  padding: 2rem;
+  border: solid 1px var(--color-border);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  box-shadow: var(--box-shadow);
+}
+
+.setting-block {
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  label {
+    flex: 0 0 auto;
+  }
+}
+
+app-calendar-list {
+  flex: 1 1 auto;
+  width: 50%;
+}
+
+.save-btn {
+  float: right;
+}

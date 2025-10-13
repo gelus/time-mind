@@ -28,7 +28,7 @@ export class TasksComponent {
   }
 
   async getTasks() {
-    const tasks = await GetTasks();
+    const tasks = await GetTasks(false);
     const myTasks = tasks.tasks.filter(t => !!t.complete === this.showCompleted);
     this.taskList.set(myTasks);
   }

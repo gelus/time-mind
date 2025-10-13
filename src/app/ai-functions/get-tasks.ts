@@ -19,8 +19,8 @@ export const GetTasksDeclaration = {
   description: "A function to retreive the users tasks from their task list.",
 }
 
-export const GetTasks = async () => {
-  messages$.next('Checking Tasks');
+export const GetTasks = async (aiMessage=true) => {
+  if (aiMessage) messages$.next('Checking Tasks');
   const q = query(collection(db, "tasks"));
 
   const querySnapshot = await getDocs(q);

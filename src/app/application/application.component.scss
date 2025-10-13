@@ -10,11 +10,17 @@ nav {
   button {
     border: solid 1px transparent;
     margin-bottom: 0.5rem;
+    &:hover {
+      color: var(--color-background);
+    }
   }
   &.calendar button.calendar,
   &.tasks button.tasks {
     border: solid 1px var(--color-border);
     color: var(--color-accent);
+    &:hover {
+      color: var(--color-background);
+    }
   }
 }
 

@@ -1,10 +1,10 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import {AuthService} from '../../auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-user-menu',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './user-menu.component.html',
   styleUrl: './user-menu.component.scss'
 })

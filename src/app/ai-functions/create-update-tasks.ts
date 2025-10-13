@@ -36,7 +36,6 @@ export const CreateUpdateTasks = async ({tasks}:{tasks:Task[]}) => {
         ({ id, userId, summary, complete,       description,    timeEstimate,   timeCompleted   })
       )(task);
       const taskRef = doc(db, 'tasks', task.id);
-      console.log(storedFields);
       batch.set(taskRef, storedFields, {merge: true});
     }
 

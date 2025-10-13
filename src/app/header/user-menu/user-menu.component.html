@@ -9,7 +9,7 @@
       <h4>Hello, {{auth.user?.displayName}}</h4>
     </header>
     <div class="buttons">
-      <button class="menu-item naked"><i class="material-symbols-outlined">settings</i>Settings</button>
+      <button class="menu-item naked" [routerLink]="['app', 'settings']" (click)="tearDownMenu()"><i class="material-symbols-outlined">settings</i>Settings</button>
       <button class="menu-item naked" (click)=signOut()><i class="material-symbols-outlined">logout</i>Log Out</button>
     </div>
   </div>

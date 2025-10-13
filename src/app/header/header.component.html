@@ -1,12 +1,17 @@
-
-TiME MiNDER
-<a routerLink="/" class="material-symbols-outlined size-48 logo">network_intelligence_history</a>
-
-@if(themeService.selectedTheme === 'lightTheme') {
-  <button class="material-symbols-outlined size-20 naked" (click)="themeService.applyTheme('darkTheme')">dark_mode</button>
+@if (routeData$ | async; as data) {
+  @if(data['back']) {
+    <button class="material-symbols-outlined size-20 naked circle" [routerLink]="data.back">arrow_back</button>
+  }
+  @if(data['title']) {
+    {{data['title']}}
+  } @else {
+    <button [routerLink]="data.link || '/'" class="naked">TiME MiNDER</button>
+  }
 } @else {
-  <button class="material-symbols-outlined size-20 naked" (click)="themeService.applyTheme('lightTheme')">light_mode</button>
+  TiME MiNDER
 }
+
+<app-theme-toggle />
 
 @if (auth.user) {
   <app-user-menu />

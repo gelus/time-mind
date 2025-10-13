@@ -13,14 +13,11 @@
   animation: headerScrolled linear forwards;
   box-shadow: none;
   animation-timeline: scroll(root);
-  animation-range: 0 100px; /* Adjust 100px to your desired scroll threshold */
+  animation-range: 0 100px;
 }
 
-.logo {
-  width: 10px;
-  flex: 1 1 auto;
-  text-align: center;
-  text-decoration: none;
+app-theme-toggle {
+  margin-left: auto;
 }
 
 @keyframes headerScrolled {

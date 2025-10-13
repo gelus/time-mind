@@ -1,5 +1,5 @@
 import {messages$} from '../message.util';
-import * as userConfig from '../user-config';
+import { PublicSettings } from "../application/settings/settings.service";
 import {Schema} from "firebase/ai";
 
 declare var gapi: any;
@@ -24,10 +24,11 @@ export const GetEvents = async (
 ) => {
 
   messages$.next('Checking Calendar');
+  const userConfig =  PublicSettings.userSettings;
 
   try {
     const request = {
-      'calendarId': userConfig.calendarId,
+      'calendarId': userConfig?.calendar.id,
       'showDeleted': false,
       'singleEvents': true,
       'maxResults': 100,

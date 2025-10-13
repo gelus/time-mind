@@ -1,0 +1,5 @@
+@if(themeService.selectedTheme === 'lightTheme') {
+  <button class="material-symbols-outlined size-20 naked" (click)="themeService.applyTheme('darkTheme')">dark_mode</button>
+} @else {
+  <button class="material-symbols-outlined size-20 naked" (click)="themeService.applyTheme('lightTheme')">light_mode</button>
+}

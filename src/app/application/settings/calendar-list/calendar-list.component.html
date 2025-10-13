@@ -1,0 +1,12 @@
+<details>
+  <summary class="main" for="dropdown-checkbox" [style.--calendar-color]="calendar.color"><span>{{calendar.summary}}</span> <span class="arrow material-symbols-outlined">keyboard_arrow_down</span> </summary>
+  <ul class="dropdown">
+    @for(cal of calendarList$ | async; track cal.id) {
+      <li (click)="select(cal)" [style.--calendar-color]="cal.backgroundColor">{{cal.summary}}</li>
+    }
+    @if (nextPageToken) {
+      <li class="add-more" (click)="requestMore()"> <span class="material-symbols-outlined">refresh</span> Load More </li>
+    }
+  </ul>
+</details>
+
