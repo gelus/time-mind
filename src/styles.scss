@@ -29,8 +29,14 @@ footer, header, hgroup, menu, nav, section {
 ol, ul {
 	list-style: none;
 }
-blockquote, q {
-	quotes: none;
+code,
+blockquote {
+  background: var(--color-surface);
+  padding: 1rem;
+  border-left: solid 1px var(--color-border);
+  border-radius: var(--border-radius);
+  margin-bottom: 2rem;
+  display: block;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
@@ -68,6 +74,55 @@ input {
 small {
   font-size: 0.75rem;
   color: var(--color-text-secondary);
+}
+
+// text styling intended for markdown use
+markdown {
+  h1,h2,h3,h4,h5,h6,ul,ol,p,table {
+    padding-bottom: 1rem;
+    ul,ol {
+      padding-bottom: 0;
+    }
+  }
+  p,ul,ol {
+    line-height: 1.25rem;
+  }
+  hr {
+    margin-bottom: 2rem;
+  }
+  ul, ol {
+    padding-left: 1rem;
+  }
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style: decimal;
+  }
+  strong em, b em
+  th, strong, b {
+    font-weight: bold;
+    color: var(--color-highlight);
+  }
+  em {
+    font-style: italic;
+    font-weight: 300;
+  }
+  table {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  thead {
+    border-bottom: solid 1px var(--color-border);
+  }
+  th, td {
+    text-align: left;
+    padding: 0.5rem 0.5rem;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: var(--color-surface)
+  }
+
 }
 
 /* new rules */

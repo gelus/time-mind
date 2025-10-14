@@ -34,13 +34,10 @@
   margin-top: 2rem;
   display: flex;
 }
-.response {
-  white-space: pre-wrap;
-}
 .response-text {
   padding-top: 13px;
   padding-left: 1rem;
-  white-space: pre-wrap;
+  flex: 1 1 auto;
 }
 
 .brain {

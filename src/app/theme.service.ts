@@ -18,7 +18,7 @@ export class ThemeService {
       'color-primary-text':   '#1E293B',       // dark slate gray
       'color-secondary-text': '#475569',       // medium gray
       'color-accent':         '#8B5CF6',       // bright purple accent for buttons/links
-      'color-highlight':      '#EDE9FE',       // very light lavender highlight for hover/cards
+      'color-highlight':      '#363636',       // very dark text color
       'color-border':         '#CBD5E1',       // light border
       'color-overlay':        'rgba(0,0,0,0.65)',
       'color-hover':          '#A78BFA',       // brighter purple for hover
@@ -36,7 +36,7 @@ export class ThemeService {
       'color-primary-text':   '#F8FAFC',       // off-white text
       'color-secondary-text': '#DFDFDF',       // muted gray
       'color-accent':         '#8B5CF6',       // bright purple accent
-      'color-highlight':      '#4C2D91',       // darker purple highlight for dark theme
+      'color-highlight':      '#FFFFFF',       // pure white text
       'color-border':         '#475569',       // subtle border
       'color-overlay':        'rgba(255,255,255,0.65)',
       'color-hover':          '#7C3AED',       // brighter purple hover

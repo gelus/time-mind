@@ -8,12 +8,16 @@
       @if (message.responseText(); as text) {
         <span class="brain material-symbols-outlined size-40">network_intelligence_history</span>
         <div class="response-text">
-          {{text}}
+          <markdown>
+            {{text}}
+          </markdown>
         </div>
       } @else {
         <span class="brain loading material-symbols-outlined size-40">network_intelligence_history</span>
         <div class="response-text">
-          {{(loadingMessages$ | async) || 'Thinking'}}...
+          <markdown>
+            {{(loadingMessages$ | async) || 'Thinking'}}...
+          </markdown>
         </div>
       }
     </div>
