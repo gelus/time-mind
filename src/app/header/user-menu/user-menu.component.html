@@ -1,11 +1,11 @@
-<button class="user-img-btn" (click)=toggleMenu()><img [src]="auth.user?.photoURL" /></button>
+<button class="user-img-btn" (click)=toggleMenu()><img referrerPolicy="no-referrer" [src]="auth.user?.photoURL" /></button>
 
 @if (abortControl) {
   <div class="userMenu" #userMenuElm>
     <button class="close-btn material-symbols-outlined naked circle small" (click)=tearDownMenu()>close</button>
     <header>
       <small>{{auth.user?.email}}</small>
-      <img [src]="auth.user?.photoURL" />
+      <img referrerPolicy="no-referrer" [src]="auth.user?.photoURL" />
       <h4>Hello, {{auth.user?.displayName}}</h4>
     </header>
     <div class="buttons">
