@@ -16,6 +16,7 @@
 
 .scheduled, .completed {
   position: absolute;
+  top: -1px;
   height: 100%;
   border: solid 1px var(--color-surface);
   border-radius: var(--border-radius);

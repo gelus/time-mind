@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential, signInWithPopup, signOut} from 'firebase/auth';
-import {ReplaySubject} from 'rxjs';
+import {BehaviorSubject, ReplaySubject, finalize} from 'rxjs';
 
 declare var google: any;
 declare var gapi: any;
@@ -27,11 +27,19 @@ export class AuthService {
   id_token?: string;
   access_token?: string;
   user?: User;
-  user$ = new ReplaySubject<User|null>(1);
+  user$ = new BehaviorSubject<User|null>(null);
   provider: any;
   gapiResolved: Promise<void>;
 
   constructor() {
+
+    this.user$.pipe(
+
+      finalize(() => console.log('userSettings$ FINISHED/UNSUBSCRIBED')), // <--- ADD THIS
+    ).subscribe({
+      next() { console.log('user next')},
+      complete() { console.log('user complete')},
+    })
 
     this.auth = getAuth();
 
@@ -91,7 +99,6 @@ export class AuthService {
   onAuthStateChangedHandle = async (user: any) => {
     console.log('Auth State Change');
     if (user) {
-      console.log('user logged in');
       (window as any).t = {
         tokenClient: this.tokenClient,
         authClient: this.authClient,
@@ -100,6 +107,7 @@ export class AuthService {
       this.user = user;
       __user = user;
       this.user$.next(user);
+      console.log('user logged in sent', user);
 
       //this.tokenClient.requestAccessToken({ prompt: 'none' });
     } else {

@@ -28,6 +28,12 @@ export const DeleteTasks = async ({tasks}:{tasks:string[]}) => {
       batch.delete(taskRef);
     }
 
+  try {
     await batch.commit();
     (window as any).toastr.success('Tasks have been removed');
+    return {result: 'success'};
+  } catch {
+    (window as any).toastr.error('Something Went wrong while removing tasks');
+    return {result: 'railure'};
+  }
 }

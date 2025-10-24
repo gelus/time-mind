@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import {AuthService} from '../../auth.service';
-import {switchMap, tap} from 'rxjs';
+import {switchMap} from 'rxjs';
 import {collection, doc, getDoc, setDoc} from 'firebase/firestore';
 import {db} from '../../firebase.config';
 import {CalendarSubset} from './calendar-list/calendar-list.component';
 import {ThemeString} from '../../theme.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export class UserSettings {
   calendar: CalendarSubset = {
@@ -25,8 +26,8 @@ export class SettingsService {
 
   auth = inject(AuthService);
 
-
   userSettings$ = this.auth.user$.pipe(
+    takeUntilDestroyed(),
     switchMap(async (user) => {
       if (user) {
         const userConfigRef = doc(db, "user-configs", user.uid);
@@ -36,8 +37,11 @@ export class SettingsService {
         return null;
       }
     }),
-    tap((userSettings: UserSettings|null) => PublicSettings.userSettings = userSettings)
   );
+
+  constructor() {
+    this.userSettings$.subscribe((userSettings: UserSettings|null) => PublicSettings.userSettings = userSettings );
+  }
 
   async saveUserSettings(userSettings: Partial<UserSettings>, supressPopup=false) {
     const configRef = collection(db, "user-configs");

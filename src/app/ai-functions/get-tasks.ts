@@ -1,6 +1,6 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../firebase.config';
-import { messages$ } from "../message.util";
+import { messages$ } from '../message.util';
 
 export interface Task {
   id: string;

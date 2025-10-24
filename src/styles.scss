@@ -29,7 +29,6 @@ footer, header, hgroup, menu, nav, section {
 ol, ul {
 	list-style: none;
 }
-code,
 blockquote {
   background: var(--color-surface);
   padding: 1rem;
@@ -98,6 +97,15 @@ markdown {
   }
   ol {
     list-style: decimal;
+  }
+  code {
+    display: inline-block;
+    color: var(--color-text-secondary);
+    padding: 0 0.5rem;
+    background: var(--color-surface);
+    font-family: monospace;
+    font-weight: lighter;
+    font-style: italic;
   }
   strong em, b em
   th, strong, b {

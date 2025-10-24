@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, inject, signal } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AiService} from '../../ai.service';
 import {CommonModule} from '@angular/common';
@@ -11,11 +11,15 @@ import { MarkdownComponent } from 'ngx-markdown';
   selector: 'app-chat',
   imports: [CommonModule, FormsModule, ScrollToDirective, MarkdownComponent],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
+changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatComponent {
 
-  loadingMessages$ = messages$;
+  ngZone = inject(NgZone);
+  changeDetector = inject(ChangeDetectorRef);
+
+  loadingMessages$ = messages$
 
   messages: Message[] = [];
 
@@ -58,7 +62,6 @@ class Message {
       this.response = result.response;
       const text = this.response.text();
       const formatedText = text.trim().replace(/(\*|\d\.?) +/g, "$1 "); // strip out extra spaces from lsits
-      console.log(formatedText.replace(/ /g, '.'));
       this.responseText.set(formatedText);
     });
   }

@@ -28,6 +28,7 @@ main {
   display: flex;
   flex: 1 1 auto;
   gap: 1.5rem;
+  overflow: hidden;
   padding: 0 0 1.5rem 34px;
   height: calc(100vh - var(--header-height));
   box-sizing: border-box;
@@ -40,6 +41,7 @@ main {
   app-calendar {
     margin-right: 1.5rem;
     flex: 1 0 auto;
+    width: 40%;
     max-width: 40%;
     min-width: 350px;
   }

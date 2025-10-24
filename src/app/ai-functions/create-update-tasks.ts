@@ -39,8 +39,15 @@ export const CreateUpdateTasks = async ({tasks}:{tasks:Task[]}) => {
       batch.set(taskRef, storedFields, {merge: true});
     }
 
-    await batch.commit();
-    (window as any).toastr.success(messageArray.join('<br />'),'Tasks Updated');
+    try {
+      const ret = await batch.commit();
+      console.log(ret);
+      (window as any).toastr.success(messageArray.join('<br />'),'Tasks Updated');
+      return {result: 'success'}
+    } catch {
+      (window as any).toastr.error(messageArray.join('<br />'),'Task Update Failed');
+      return {result: 'task updated failed'}
+    }
   } else {
     (window as any).toastr.error("User Not Found");
     throw "User Not Found"

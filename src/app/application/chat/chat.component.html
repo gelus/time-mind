@@ -1,27 +1,27 @@
 <div class="messages">
-  @for(message of messages; track $index) {
-  <div class="message" [appScrollTo] #prompt>
-    <div class="promptBlock">
-      <div class="prompt">{{message.prompt}}</div>
+  @if ({message: (loadingMessages$ | async)}; as loading) {
+    @for(message of messages; track $index) {
+    <div class="message" [appScrollTo] #prompt>
+      <div class="promptBlock">
+        <div class="prompt">{{message.prompt}}</div>
+      </div>
+      <div class="responseBlock">
+        @if (message.responseText(); as text) {
+          <span class="brain material-symbols-outlined size-40">network_intelligence_history</span>
+          <div class="response-text">
+            <markdown>
+              {{text}}
+            </markdown>
+          </div>
+        } @else {
+          <span class="brain loading material-symbols-outlined size-40">network_intelligence_history</span>
+          <div class="response-text">
+            {{(loading.message) || 'Thinking'}}...
+          </div>
+        }
+      </div>
     </div>
-    <div class="responseBlock">
-      @if (message.responseText(); as text) {
-        <span class="brain material-symbols-outlined size-40">network_intelligence_history</span>
-        <div class="response-text">
-          <markdown>
-            {{text}}
-          </markdown>
-        </div>
-      } @else {
-        <span class="brain loading material-symbols-outlined size-40">network_intelligence_history</span>
-        <div class="response-text">
-          <markdown>
-            {{(loadingMessages$ | async) || 'Thinking'}}...
-          </markdown>
-        </div>
-      }
-    </div>
-  </div>
+    }
   }
 </div>
 <label class="textarea">

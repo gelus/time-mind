@@ -1,5 +1,5 @@
 <div class="estimate">
-  <div class="scheduled" [style.width.%]=scheduledPercent></div>
-  <div class="completed" [style.width.%]=completedPercent></div>
+  @if (scheduledPercent) { <div class="scheduled" [style.width.%]=scheduledPercent></div> }
+  @if (completedPercent) { <div class="completed" [style.width.%]=completedPercent></div> }
 </div>
 <span>{{completed | number:'1.0-2'}}/{{estimate | number:'1.0-2'}} Hrs</span>
