@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Auth, GoogleAuthProvider, User, getAuth, onAuthStateChanged, signInWithCredential, signInWithPopup, signOut} from 'firebase/auth';
-import {BehaviorSubject, ReplaySubject, finalize} from 'rxjs';
+import {BehaviorSubject, ReplaySubject, Subject, finalize, shareReplay} from 'rxjs';
 
 declare var google: any;
 declare var gapi: any;
@@ -27,7 +27,8 @@ export class AuthService {
   id_token?: string;
   access_token?: string;
   user?: User;
-  user$ = new BehaviorSubject<User|null>(null);
+  userSubject = new Subject<User|null>();
+  user$ = this.userSubject.pipe(shareReplay(1));
   provider: any;
   gapiResolved: Promise<void>;
 
@@ -37,7 +38,7 @@ export class AuthService {
 
       finalize(() => console.log('userSettings$ FINISHED/UNSUBSCRIBED')), // <--- ADD THIS
     ).subscribe({
-      next() { console.log('user next')},
+      next(user) { console.log('user next', user)},
       complete() { console.log('user complete')},
     })
 
@@ -106,12 +107,11 @@ export class AuthService {
       }
       this.user = user;
       __user = user;
-      this.user$.next(user);
+      this.userSubject.next(user);
       console.log('user logged in sent', user);
 
-      //this.tokenClient.requestAccessToken({ prompt: 'none' });
     } else {
-      this.user$.next(null);
+      this.userSubject.next(null);
       delete this.user;
       console.log('User Not signed in');
       // Redirect to log in page?
@@ -124,13 +124,22 @@ export class AuthService {
       const result = await signInWithPopup(this.auth, this.provider)
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const accessToken = credential?.accessToken;
-      console.log(result);
-      console.log(credential);
-      console.log(accessToken);
-      gapi.client.setToken({access_token: accessToken})
+      this.getAccessTokenFromStorage(accessToken as string);
     } catch (e) {
       console.error(e);
     }
+  }
+
+  getAccessTokenFromStorage(accessToken?: string) {
+    if (accessToken) localStorage.setItem('access_token', accessToken as string);
+    else accessToken = localStorage.getItem('access_token') as string;
+
+    console.log('accessToken: ', accessToken);
+
+    if (accessToken) {
+      gapi.client.setToken({access_token: accessToken});
+      return true;
+    } else return false;
   }
 
   async signOut() {

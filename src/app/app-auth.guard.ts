@@ -11,9 +11,10 @@ export const appAuthGuard: CanActivateFn = (/*route, state*/) => {
   return auth.user$.pipe(
     take(1),
     switchMap(async (user: User|null) => {
-      if (user) return true;
+      if (user && auth.getAccessTokenFromStorage()) return true;
+
       await auth.firebaseFlow()
-      if (auth.user) return true;
+      if (user && auth.getAccessTokenFromStorage()) return true;
 
       const landingPath = router.parseUrl("/");
       return new RedirectCommand(landingPath);
