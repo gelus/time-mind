@@ -20,7 +20,8 @@ export class AiService {
 
     this.model = getGenerativeModel(this.ai, {
       model: "gemini-2.5-flash",
-      mode: InferenceMode.PREFER_IN_CLOUD,
+      mode: InferenceMode.ONLY_IN_CLOUD,
+      //mode: InferenceMode.PREFER_IN_CLOUD,
       //mode: InferenceMode.PREFER_ON_DEVICE,
       //mode: InferenceMode.ONLY_ON_DEVICE,
     } as ModelParams);
@@ -29,7 +30,7 @@ export class AiService {
 
       tools: tools,
       history: [
-        {role: "user", parts: [{text: this.getSystemInstruction()}]}
+        //{role: "user", parts: [{text: pre-load user values}]}
       ],
       systemInstruction: {
         role: "system",
@@ -46,7 +47,14 @@ export class AiService {
 
   async sendChat(prompt: string | (string|Part)[], recursive=false): Promise<GenerateContentResult> {
 
-    let result = await this.chat.sendMessage(prompt);
+    let result;
+
+    try {
+      result = await this.chat.sendMessage(prompt);
+    } catch (e) {
+      console.error(e);
+      return {response: {text: () => 'Something went wrong... Sorry..'}} as GenerateContentResult
+    }
     let functionCalls = result.response.functionCalls();
 
     console.log('results recieved\n', result.response.text());

@@ -12,6 +12,7 @@ export interface Task {
   timeEstimate?: number; // time estimate in hours
   timeCompleted?: number; // time completed in hours
   timeScheduled?: number; // time scheduled in hours
+  scheduledEventsIds?: string[];
 }
 
 export const GetTasksDeclaration = {
@@ -28,5 +29,6 @@ export const GetTasks = async (aiMessage=true) => {
   querySnapshot.forEach((doc) => {
     tasks.push(doc.data() as Task);
   });
+  console.log(tasks);
   return {tasks};
 }

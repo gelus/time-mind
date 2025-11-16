@@ -54,7 +54,11 @@ export const eventSchema = Schema.object({
         })
       }
     }),
-  }
+    taskId: Schema.string({
+      "description": "If the event is associated with a task, provide the id of the task here."
+    }),
+  },
+  optionalProperties: ["taskId"],
 });
 
 export const eventSchemaWithId = Schema.object({

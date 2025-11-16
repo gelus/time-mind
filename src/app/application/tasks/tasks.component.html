@@ -25,6 +25,11 @@
           <button class="material-symbols-outlined naked circle small size-20">menu_open</button>
       </div>
     </div>
+    @if (task.scheduledEventsIds?.length) {
+      <div class="schedule">
+        <h6>{{task.scheduledEventsIds?.length}} Scheduled Event{{(task.scheduledEventsIds?.length || 0) > 1 ? 's':''}}</h6>
+      </div>
+    }
   </div>
   } @empty {
     No tasks

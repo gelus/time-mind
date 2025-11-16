@@ -13,7 +13,7 @@ export const appAuthGuard: CanActivateFn = (/*route, state*/) => {
     switchMap(async (user: User|null) => {
       if (user && auth.getAccessTokenFromStorage()) return true;
 
-      await auth.firebaseFlow()
+      await auth.firebaseFlow();
       if (user && auth.getAccessTokenFromStorage()) return true;
 
       const landingPath = router.parseUrl("/");

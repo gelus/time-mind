@@ -1,5 +1,7 @@
+import {DocumentData, QuerySnapshot, arrayRemove, collection, getDocs, query, where, writeBatch} from "firebase/firestore";
 import { PublicSettings } from "../application/settings/settings.service";
-import {messages$} from '../message.util';
+import {db} from '../firebase.config';
+ import {messages$} from '../message.util';
 import {Schema} from "firebase/ai";
 
 declare const gapi: any;
@@ -22,6 +24,7 @@ export const DeleteEventsDeclaration = {
 export const DeleteEvents = async ({eventIds}: {eventIds: string[]}) => {
   messages$.next('Removing Calendar Events');
   const userConfig =  PublicSettings.userSettings;
+  const batch = writeBatch(db);
 
   try {
     const ret = await Promise.all(eventIds.map(id => {
@@ -30,8 +33,20 @@ export const DeleteEvents = async ({eventIds}: {eventIds: string[]}) => {
         'eventId': id,
       };
       console.log(request)
+
+      const q = query(collection(db, 'tasks'), where('scheduledEventsIds', "array-contains", id));
+      getDocs(q).then((querySnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
+        querySnapshot.forEach((doc) => {
+          batch.update(doc.ref, {
+            scheduledEventsIds: arrayRemove(id)
+          });
+        })
+      });
+
       return gapi.client.calendar.events.delete(request);
-    }))
+    }));
+
+    await batch.commit();
 
     console.log(ret);
     (window as any).toastr.success('Events have been removed');
